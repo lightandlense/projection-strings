@@ -22,27 +22,21 @@ export class Renderer {
     ctx.fillRect(0, 0, this.width, this.height);
     ctx.shadowBlur = 0;
 
-    // Pass 1 — wide soft glow stroke (all strings, one state change)
-    ctx.lineWidth = 6;
-    ctx.globalAlpha = 0.12;
+    // Pass 1 — soft glow on pluck
     for (let i = 0; i < strings.length; i++) {
-      const hue = (baseHue + (i / this.stringCount) * this.hueSpread) % 360;
       const glow = strings[i].getGlow(now);
-      ctx.strokeStyle = `hsl(${hue}, 100%, 60%)`;
-      ctx.globalAlpha = 0.1 + glow * 0.25;
-      ctx.lineWidth   = 5 + glow * 12;
+      if (glow <= 0) continue;
+      ctx.strokeStyle = '#ffffff';
+      ctx.globalAlpha = glow * 0.3;
+      ctx.lineWidth   = 5 + glow * 10;
       this._strokeString(ctx, strings[i]);
     }
 
-    // Pass 2 — sharp center line (all strings)
-    ctx.lineWidth   = 1;
+    // Pass 2 — sharp white line
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth   = 1.2;
     ctx.globalAlpha = 1;
     for (let i = 0; i < strings.length; i++) {
-      const hue = (baseHue + (i / this.stringCount) * this.hueSpread) % 360;
-      const glow = strings[i].getGlow(now);
-      ctx.strokeStyle = `hsl(${hue}, 100%, ${62 + glow * 28}%)`;
-      ctx.lineWidth   = 0.8 + glow * 0.7;
-      ctx.globalAlpha = 0.85 + glow * 0.15;
       this._strokeString(ctx, strings[i]);
     }
 
