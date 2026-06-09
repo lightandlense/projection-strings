@@ -54,7 +54,7 @@ export class HandTracker {
     }
 
     const tip   = results.multiHandLandmarks[0][8]; // index fingertip
-    const x     = (1 - tip.x) * this.canvasWidth;   // flip for duplicate/mirror display mode
+    const x     = tip.x * this.canvasWidth;          // camera mirrors + display mirrors = double flip = no flip
     const y     = tip.y * this.canvasHeight;
     const prevX = this.prevX ?? x;
     this.prevX  = x;
