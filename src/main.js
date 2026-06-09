@@ -5,7 +5,7 @@ import { HandTracker } from './hand-tracker.js';
 import { AudioEngine } from './audio.js';
 
 export const CONFIG = {
-  STRING_COUNT: 40,
+  STRING_COUNT: 60,
   NODES_PER_STRING: 20,
   INFLUENCE_RADIUS: 40,
   DAMPING: 0.98,
@@ -44,11 +44,11 @@ let physics;
 const strings = [];
 function rebuildStrings() {
   strings.length = 0;
-  const spacing = CONFIG.CANVAS_WIDTH / (CONFIG.STRING_COUNT + 1);
+  // Strings span edge-to-edge: first string at x=0, last at x=CANVAS_WIDTH
+  const spacing = CONFIG.CANVAS_WIDTH / (CONFIG.STRING_COUNT - 1);
   for (let i = 0; i < CONFIG.STRING_COUNT; i++) {
-    const x = spacing * (i + 1);
-    const xOffset = (Math.random() - 0.5) * 10;
-    strings.push(new StringInst(x, 0, CONFIG.NODES_PER_STRING, CONFIG.SEGMENT_LENGTH, xOffset));
+    const x = spacing * i;
+    strings.push(new StringInst(x, 0, CONFIG.NODES_PER_STRING, CONFIG.SEGMENT_LENGTH, 0));
   }
   physics = new PhysicsEngine(strings, CONFIG);
 }
