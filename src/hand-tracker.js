@@ -20,14 +20,6 @@ export class HandTracker {
     video.setAttribute('playsinline', '');
     await video.play();
 
-    // Offscreen canvas used to pre-flip the video frame before MediaPipe sees it.
-    // Many webcam drivers mirror the feed by default — this undoes that so
-    // tip.x coordinates match physical left/right correctly.
-    const flipCanvas = document.createElement('canvas');
-    flipCanvas.width  = 640;
-    flipCanvas.height = 480;
-    const flipCtx = flipCanvas.getContext('2d');
-
     const hands = new Hands({
       locateFile: (file) =>
         `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`,
@@ -44,12 +36,7 @@ export class HandTracker {
 
     const sendFrame = async () => {
       if (video.readyState >= 2) {
-        // Flip horizontally so mirrored driver feeds are corrected
-        flipCtx.save();
-        flipCtx.scale(-1, 1);
-        flipCtx.drawImage(video, -flipCanvas.width, 0, flipCanvas.width, flipCanvas.height);
-        flipCtx.restore();
-        await hands.send({ image: flipCanvas });
+        await hands.send({ image: video });
       }
       requestAnimationFrame(sendFrame);
     };
@@ -67,7 +54,7 @@ export class HandTracker {
     }
 
     const tip   = results.multiHandLandmarks[0][8]; // index fingertip
-    const x     = tip.x * this.canvasWidth;          // no mirror in code — flip handled in video pre-processing
+    const x     = (1 - tip.x) * this.canvasWidth;   // flip for duplicate/mirror display mode
     const y     = tip.y * this.canvasHeight;
     const prevX = this.prevX ?? x;
     this.prevX  = x;
