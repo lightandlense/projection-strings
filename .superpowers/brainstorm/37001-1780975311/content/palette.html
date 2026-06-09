@@ -1,0 +1,98 @@
+<h2>Color Palette</h2>
+<p class="subtitle">Each string glows with color — either uniform or shifting by position. Which vibe fits?</p>
+
+<div class="cards">
+  <div class="card" data-choice="cyan-magenta" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#000;height:160px;display:flex;align-items:center;justify-content:center;padding:8px;">
+      <svg width="220" height="140" viewBox="0 0 220 140">
+        <defs>
+          <filter id="g1"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <path d="M20,0 Q22,35 18,70 Q20,105 20,140" stroke="#00ffff" stroke-width="2" fill="none" filter="url(#g1)"/>
+        <path d="M46,0 Q43,40 49,70 Q44,108 46,140" stroke="#22ddff" stroke-width="2" fill="none" filter="url(#g1)"/>
+        <path d="M72,0 Q75,35 69,70 Q73,105 72,140" stroke="#aa44ff" stroke-width="2" fill="none" filter="url(#g1)"/>
+        <path d="M98,0 Q95,40 101,70 Q96,108 98,140" stroke="#cc33ff" stroke-width="2" fill="none" filter="url(#g1)"/>
+        <path d="M124,0 Q127,35 121,70 Q125,105 124,140" stroke="#ff33cc" stroke-width="2" fill="none" filter="url(#g1)"/>
+        <path d="M150,0 Q147,40 153,70 Q148,108 150,140" stroke="#ff44aa" stroke-width="2" fill="none" filter="url(#g1)"/>
+        <path d="M176,0 Q179,35 173,70 Q177,105 176,140" stroke="#00ffff" stroke-width="2" fill="none" filter="url(#g1)"/>
+        <path d="M202,0 Q199,40 205,70 Q200,108 202,140" stroke="#aa44ff" stroke-width="2" fill="none" filter="url(#g1)"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>A — Cyber (Cyan → Magenta)</h3>
+      <p>Strings gradient from cyan on the left to magenta on the right. Classic TouchDesigner/Resolume look. High contrast on black.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="rainbow" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#000;height:160px;display:flex;align-items:center;justify-content:center;padding:8px;">
+      <svg width="220" height="140" viewBox="0 0 220 140">
+        <defs>
+          <filter id="g2"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <path d="M20,0 Q22,35 18,70 Q20,105 20,140" stroke="#ff0040" stroke-width="2" fill="none" filter="url(#g2)"/>
+        <path d="M46,0 Q43,40 49,70 Q44,108 46,140" stroke="#ff6600" stroke-width="2" fill="none" filter="url(#g2)"/>
+        <path d="M72,0 Q75,35 69,70 Q73,105 72,140" stroke="#ffee00" stroke-width="2" fill="none" filter="url(#g2)"/>
+        <path d="M98,0 Q95,40 101,70 Q96,108 98,140" stroke="#00ff44" stroke-width="2" fill="none" filter="url(#g2)"/>
+        <path d="M124,0 Q127,35 121,70 Q125,105 124,140" stroke="#00aaff" stroke-width="2" fill="none" filter="url(#g2)"/>
+        <path d="M150,0 Q147,40 153,70 Q148,108 150,140" stroke="#aa00ff" stroke-width="2" fill="none" filter="url(#g2)"/>
+        <path d="M176,0 Q179,35 173,70 Q177,105 176,140" stroke="#ff0088" stroke-width="2" fill="none" filter="url(#g2)"/>
+        <path d="M202,0 Q199,40 205,70 Q200,108 202,140" stroke="#ff0040" stroke-width="2" fill="none" filter="url(#g2)"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>B — Full Spectrum</h3>
+      <p>Full rainbow across all strings. Vibrant and festive — good for installations where you want immediate visual impact.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="white-glow" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#000;height:160px;display:flex;align-items:center;justify-content:center;padding:8px;">
+      <svg width="220" height="140" viewBox="0 0 220 140">
+        <defs>
+          <filter id="g3"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <filter id="g3b"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <!-- displaced string gets color, resting strings stay white -->
+        <path d="M20,0 Q20,35 20,70 Q20,105 20,140" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" fill="none" filter="url(#g3b)"/>
+        <path d="M46,0 Q46,35 46,70 Q46,105 46,140" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" fill="none" filter="url(#g3b)"/>
+        <!-- displaced string -->
+        <path d="M72,0 Q85,35 60,70 Q78,105 72,140" stroke="#00ffff" stroke-width="2.5" fill="none" filter="url(#g3)"/>
+        <path d="M98,0 Q98,35 98,70 Q98,105 98,140" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" fill="none" filter="url(#g3b)"/>
+        <path d="M124,0 Q124,35 124,70 Q124,105 124,140" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" fill="none" filter="url(#g3b)"/>
+        <!-- another displaced string -->
+        <path d="M150,0 Q163,35 138,70 Q155,105 150,140" stroke="#ff44aa" stroke-width="2.5" fill="none" filter="url(#g3)"/>
+        <path d="M176,0 Q176,35 176,70 Q176,105 176,140" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" fill="none" filter="url(#g3b)"/>
+        <path d="M202,0 Q202,35 202,70 Q202,105 202,140" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" fill="none" filter="url(#g3b)"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>C — White + Color on Touch</h3>
+      <p>Strings are white at rest. They shift to a glowing color (cyan or hot pink) when displaced. Elegant, minimal — the interaction IS the color.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="slow-hue" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#000;height:160px;display:flex;align-items:center;justify-content:center;padding:8px;">
+      <svg width="220" height="140" viewBox="0 0 220 140">
+        <defs>
+          <filter id="g4"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <!-- all same hue, slowly shifting (shown as one frozen moment: deep violet/blue) -->
+        <path d="M20,0 Q22,35 18,70 Q20,105 20,140" stroke="#5533ff" stroke-width="2" fill="none" filter="url(#g4)"/>
+        <path d="M46,0 Q43,40 49,70 Q44,108 46,140" stroke="#6622ff" stroke-width="2" fill="none" filter="url(#g4)"/>
+        <path d="M72,0 Q75,35 69,70 Q73,105 72,140" stroke="#7711ff" stroke-width="2" fill="none" filter="url(#g4)"/>
+        <path d="M98,0 Q95,40 101,70 Q96,108 98,140" stroke="#8800ee" stroke-width="2" fill="none" filter="url(#g4)"/>
+        <path d="M124,0 Q127,35 121,70 Q125,105 124,140" stroke="#9900dd" stroke-width="2" fill="none" filter="url(#g4)"/>
+        <path d="M150,0 Q147,40 153,70 Q148,108 150,140" stroke="#aa00cc" stroke-width="2" fill="none" filter="url(#g4)"/>
+        <path d="M176,0 Q179,35 173,70 Q177,105 176,140" stroke="#bb00bb" stroke-width="2" fill="none" filter="url(#g4)"/>
+        <path d="M202,0 Q199,40 205,70 Q200,108 202,140" stroke="#cc00aa" stroke-width="2" fill="none" filter="url(#g4)"/>
+        <text x="110" y="155" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="9" font-family="monospace">hue rotates slowly over time</text>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>D — Slow Hue Shift</h3>
+      <p>All strings share the same hue, which slowly rotates through the full spectrum over ~30 seconds. Meditative, cohesive — the whole field breathes color together.</p>
+    </div>
+  </div>
+</div>

@@ -26,13 +26,26 @@
       opacity: 0.6;
     }
     #overlay.hidden { display: none; }
+
+    #status {
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: monospace;
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+      pointer-events: none;
+      z-index: 5;
+      letter-spacing: 0.08em;
+    }
   </style>
 </head>
 <body>
-  <div id="overlay"><p>touch to begin</p></div>
+  <div id="overlay"><p>click to begin</p></div>
   <canvas id="canvas"></canvas>
+  <div id="status">loading...</div>
 
-  <script src="https://cdn.jsdelivr.net/npm/tone@14/build/Tone.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
 

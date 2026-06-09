@@ -39,12 +39,15 @@ export class PhysicsEngine {
     const events = [];
     for (const finger of fingers) {
       const vx = finger.x - finger.prevX;
+      let hitsThisFrame = 0;
       for (let i = 0; i < this.strings.length; i++) {
+        if (hitsThisFrame >= 3) break; // cap crossings per frame
         const velocity = this.strings[i].checkCrossing(
           finger.x, finger.prevX, vx, now, this.config.TRIGGER_DEBOUNCE_MS
         );
         if (velocity !== null) {
           events.push({ stringIndex: i, velocity });
+          hitsThisFrame++;
         }
       }
     }

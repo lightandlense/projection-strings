@@ -1,0 +1,75 @@
+<h2>Pluck Effect</h2>
+<p class="subtitle">When a finger crosses a string and triggers a note — what does it look like?</p>
+
+<div class="cards">
+  <div class="card" data-choice="flash-bright" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#000;height:170px;display:flex;align-items:center;justify-content:center;padding:8px;position:relative;">
+      <svg width="220" height="150" viewBox="0 0 220 150">
+        <defs>
+          <filter id="p1a"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <filter id="p1b"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <!-- resting strings dim -->
+        <path d="M40,0 Q40,75 40,150" stroke="#6633ff" stroke-width="1.2" fill="none" filter="url(#p1b)" opacity="0.5"/>
+        <path d="M80,0 Q80,75 80,150" stroke="#7722ff" stroke-width="1.2" fill="none" filter="url(#p1b)" opacity="0.5"/>
+        <!-- triggered string: bright white flash, big glow -->
+        <path d="M120,0 Q145,37 100,75 Q125,112 120,150" stroke="white" stroke-width="3" fill="none" filter="url(#p1a)" opacity="1"/>
+        <path d="M160,0 Q160,75 160,150" stroke="#9900ff" stroke-width="1.2" fill="none" filter="url(#p1b)" opacity="0.5"/>
+        <path d="M200,0 Q200,75 200,150" stroke="#aa00ee" stroke-width="1.2" fill="none" filter="url(#p1b)" opacity="0.5"/>
+        <!-- flash label -->
+        <text x="120" y="80" text-anchor="middle" fill="white" font-size="8" font-family="monospace" opacity="0.5">FLASH</text>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>A — White Flash</h3>
+      <p>Triggered string briefly blazes white and oversized, then fades back to its hue color. Sharp, percussive — matches the harp pluck sound.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="ripple" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#000;height:170px;display:flex;align-items:center;justify-content:center;padding:8px;">
+      <svg width="220" height="150" viewBox="0 0 220 150">
+        <defs>
+          <filter id="p2"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <!-- ripple: neighboring strings also disturbed, fading out -->
+        <path d="M40,0 Q43,37 37,75 Q41,112 40,150" stroke="#6633ff" stroke-width="1.5" fill="none" filter="url(#p2)" opacity="0.6"/>
+        <path d="M80,0 Q86,37 74,75 Q82,112 80,150" stroke="#7722ff" stroke-width="2" fill="none" filter="url(#p2)" opacity="0.75"/>
+        <!-- triggered string -->
+        <path d="M120,0 Q148,37 96,75 Q128,112 120,150" stroke="#8811ff" stroke-width="2.5" fill="none" filter="url(#p2)" opacity="1"/>
+        <!-- neighbors disturbed -->
+        <path d="M160,0 Q166,37 154,75 Q162,112 160,150" stroke="#9900ff" stroke-width="2" fill="none" filter="url(#p2)" opacity="0.75"/>
+        <path d="M200,0 Q203,37 197,75 Q201,112 200,150" stroke="#aa00ee" stroke-width="1.5" fill="none" filter="url(#p2)" opacity="0.6"/>
+        <text x="120" y="135" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="8" font-family="monospace">energy spreads to neighbors</text>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>B — Ripple to Neighbors</h3>
+      <p>Plucking one string sends energy to the strings on either side, like a real curtain of strings. Creates fluid, organic wave motion through the field.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="glow-pulse" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#000;height:170px;display:flex;align-items:center;justify-content:center;padding:8px;">
+      <svg width="220" height="150" viewBox="0 0 220 150">
+        <defs>
+          <filter id="p3a"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <filter id="p3b"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <!-- resting strings -->
+        <path d="M40,0 Q40,75 40,150" stroke="#6633ff" stroke-width="1.2" fill="none" filter="url(#p3b)" opacity="0.5"/>
+        <path d="M80,0 Q80,75 80,150" stroke="#7722ff" stroke-width="1.2" fill="none" filter="url(#p3b)" opacity="0.5"/>
+        <!-- triggered: massive glow bloom, stays colored -->
+        <path d="M120,0 Q145,37 100,75 Q125,112 120,150" stroke="#ff00ff" stroke-width="2" fill="none" filter="url(#p3a)" opacity="0.9"/>
+        <path d="M120,0 Q145,37 100,75 Q125,112 120,150" stroke="white" stroke-width="1.5" fill="none" filter="url(#p3b)" opacity="0.9"/>
+        <path d="M160,0 Q160,75 160,150" stroke="#9900ff" stroke-width="1.2" fill="none" filter="url(#p3b)" opacity="0.5"/>
+        <path d="M200,0 Q200,75 200,150" stroke="#aa00ee" stroke-width="1.2" fill="none" filter="url(#p3b)" opacity="0.5"/>
+        <text x="120" y="135" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="8" font-family="monospace">big bloom, fades slowly</text>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>C — Glow Pulse</h3>
+      <p>Plucked string expands into a large soft bloom that slowly decays over ~1s. No white flash — just a deep, sustained glow burst. Dreamy, atmospheric.</p>
+    </div>
+  </div>
+</div>

@@ -16,8 +16,36 @@ export class StringInst {
       this.nodes.push({ x: x + xOffset, y: ny, px: x + xOffset, py: ny });
     }
 
-    this.lastCrossingSide = null; // 'left' | 'right' — for crossing detection
-    this.lastTriggerTime = 0;     // ms timestamp of last note trigger
+    this.lastCrossingSide = null;
+    this.lastTriggerTime = 0;
+    this.glowStartTime = 0;       // ms timestamp when glow pulse started
+    this.glowDuration = 0;        // ms duration of current pulse
+    this.glowPeak = 0;            // peak intensity (0–1)
+  }
+
+  /** Trigger a glow bloom on this string.
+   * @param {number} now - Date.now()
+   * @param {number} duration - decay duration in ms
+   * @param {number} intensity - peak intensity 0–1
+   */
+  triggerGlow(now, duration, intensity = 1) {
+    if (intensity > this.glowPeak * (1 - (now - this.glowStartTime) / this.glowDuration)) {
+      this.glowStartTime = now;
+      this.glowDuration = duration;
+      this.glowPeak = intensity;
+    }
+  }
+
+  /** Returns current glow intensity 0–1 based on decay curve.
+   * @param {number} now - Date.now()
+   */
+  getGlow(now) {
+    if (this.glowDuration === 0) return 0;
+    const t = (now - this.glowStartTime) / this.glowDuration;
+    if (t >= 1) return 0;
+    // ease-out cubic decay
+    const eased = 1 - Math.pow(t, 3);
+    return eased * this.glowPeak;
   }
 
   /** Run one Verlet physics step.

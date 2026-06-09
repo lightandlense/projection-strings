@@ -1,0 +1,81 @@
+<h2>Line Orientation</h2>
+<p class="subtitle">The reference video uses horizontal lines that deform around a body. Which direction should we go?</p>
+
+<div class="cards">
+  <div class="card" data-choice="vertical" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#000;height:180px;display:flex;align-items:center;justify-content:center;gap:14px;padding:10px;">
+      <svg width="160" height="160" viewBox="0 0 160 160">
+        <!-- vertical glowing strings -->
+        <defs>
+          <filter id="gv"><feGaussianBlur stdDeviation="2.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <!-- strings with slight wave displacement -->
+        <path d="M20,0 Q22,40 18,80 Q20,120 20,160" stroke="#00ffff" stroke-width="1.5" fill="none" filter="url(#gv)" opacity="0.9"/>
+        <path d="M40,0 Q36,50 44,80 Q38,120 40,160" stroke="#aa44ff" stroke-width="1.5" fill="none" filter="url(#gv)" opacity="0.9"/>
+        <path d="M60,0 Q64,40 56,80 Q62,120 60,160" stroke="#ff44aa" stroke-width="1.5" fill="none" filter="url(#gv)" opacity="0.9"/>
+        <path d="M80,0 Q76,50 84,80 Q78,120 80,160" stroke="#00ffff" stroke-width="1.5" fill="none" filter="url(#gv)" opacity="0.9"/>
+        <path d="M100,0 Q104,40 96,80 Q102,120 100,160" stroke="#aa44ff" stroke-width="1.5" fill="none" filter="url(#gv)" opacity="0.9"/>
+        <path d="M120,0 Q116,50 124,80 Q118,120 120,160" stroke="#ff44aa" stroke-width="1.5" fill="none" filter="url(#gv)" opacity="0.9"/>
+        <path d="M140,0 Q144,40 136,80 Q142,120 140,160" stroke="#00ffff" stroke-width="1.5" fill="none" filter="url(#gv)" opacity="0.9"/>
+        <!-- hand influence zone -->
+        <circle cx="80" cy="80" r="22" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <circle cx="80" cy="80" r="4" fill="white" opacity="0.8"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>A — Keep Vertical</h3>
+      <p>Vertical strings hang top-to-bottom. Finger plucks them like a harp. Add neon glow, more strings, color. Same interaction model, new look.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="horizontal" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#000;height:180px;display:flex;align-items:center;justify-content:center;padding:10px;">
+      <svg width="160" height="160" viewBox="0 0 160 160">
+        <defs>
+          <filter id="gh"><feGaussianBlur stdDeviation="2.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <!-- horizontal lines deformed around a body silhouette -->
+        <path d="M0,20 Q80,18 160,20" stroke="#00ffff" stroke-width="1.5" fill="none" filter="url(#gh)" opacity="0.9"/>
+        <path d="M0,40 Q50,38 70,52 Q90,64 110,52 Q130,40 160,40" stroke="#aa44ff" stroke-width="1.5" fill="none" filter="url(#gh)" opacity="0.9"/>
+        <path d="M0,60 Q40,58 65,75 Q80,90 95,75 Q120,58 160,60" stroke="#ff44aa" stroke-width="1.5" fill="none" filter="url(#gh)" opacity="0.9"/>
+        <path d="M0,80 Q35,78 62,98 Q80,112 98,98 Q125,78 160,80" stroke="#00ffff" stroke-width="1.5" fill="none" filter="url(#gh)" opacity="0.9"/>
+        <path d="M0,100 Q40,98 65,115 Q80,125 95,115 Q120,98 160,100" stroke="#aa44ff" stroke-width="1.5" fill="none" filter="url(#gh)" opacity="0.9"/>
+        <path d="M0,120 Q50,118 70,128 Q90,136 110,128 Q130,118 160,120" stroke="#ff44aa" stroke-width="1.5" fill="none" filter="url(#gh)" opacity="0.9"/>
+        <path d="M0,140 Q80,138 160,140" stroke="#00ffff" stroke-width="1.5" fill="none" filter="url(#gh)" opacity="0.9"/>
+        <!-- body silhouette hint -->
+        <ellipse cx="80" cy="88" rx="18" ry="40" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>B — Switch to Horizontal</h3>
+      <p>Lines run left-to-right, deform around whatever breaks the field. Closest to the TouchDesigner reference. Works beautifully with body silhouettes.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="both" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#000;height:180px;display:flex;align-items:center;justify-content:center;padding:10px;">
+      <svg width="160" height="160" viewBox="0 0 160 160">
+        <defs>
+          <filter id="gb"><feGaussianBlur stdDeviation="2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <!-- both axes -->
+        <path d="M0,40 Q80,38 160,40" stroke="#00ffff" stroke-width="1" fill="none" filter="url(#gb)" opacity="0.7"/>
+        <path d="M0,80 Q80,78 160,80" stroke="#aa44ff" stroke-width="1" fill="none" filter="url(#gb)" opacity="0.7"/>
+        <path d="M0,120 Q80,118 160,120" stroke="#ff44aa" stroke-width="1" fill="none" filter="url(#gb)" opacity="0.7"/>
+        <path d="M40,0 Q38,80 40,160" stroke="#ff44aa" stroke-width="1" fill="none" filter="url(#gb)" opacity="0.7"/>
+        <path d="M80,0 Q78,80 80,160" stroke="#00ffff" stroke-width="1" fill="none" filter="url(#gb)" opacity="0.7"/>
+        <path d="M120,0 Q118,80 120,160" stroke="#aa44ff" stroke-width="1" fill="none" filter="url(#gb)" opacity="0.7"/>
+        <!-- intersect glow points -->
+        <circle cx="40" cy="40" r="3" fill="#ffffff" opacity="0.6" filter="url(#gb)"/>
+        <circle cx="80" cy="80" r="3" fill="#ffffff" opacity="0.6" filter="url(#gb)"/>
+        <circle cx="120" cy="120" r="3" fill="#ffffff" opacity="0.6" filter="url(#gb)"/>
+        <circle cx="40" cy="120" r="3" fill="#ffffff" opacity="0.6" filter="url(#gb)"/>
+        <circle cx="120" cy="40" r="3" fill="#ffffff" opacity="0.6" filter="url(#gb)"/>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>C — Grid (Both Axes)</h3>
+      <p>Horizontal + vertical lines form a grid. Intersection points glow on contact. More complex, more visual density — like a fabric being pushed from behind.</p>
+    </div>
+  </div>
+</div>
