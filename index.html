@@ -5,14 +5,33 @@
   <title>Projection Strings</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #000; overflow: hidden; }
-    canvas { display: block; }
+    body { background: #000; overflow: hidden; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    canvas { display: block; max-width: 100vw; max-height: 100vh; }
+
+    #overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+    }
+    #overlay p {
+      color: #fff;
+      font-family: sans-serif;
+      font-size: 24px;
+      letter-spacing: 0.1em;
+      opacity: 0.6;
+    }
+    #overlay.hidden { display: none; }
   </style>
 </head>
 <body>
+  <div id="overlay"><p>touch to begin</p></div>
   <canvas id="canvas"></canvas>
 
-  <!-- CDN dependencies -->
   <script src="https://cdn.jsdelivr.net/npm/tone@14/build/Tone.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
