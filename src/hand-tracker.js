@@ -55,7 +55,7 @@ export class HandTracker {
     }
 
     const tip  = results.multiHandLandmarks[0][8]; // index fingertip
-    const x    = tip.x * this.canvasWidth;
+    const x    = (1 - tip.x) * this.canvasWidth;   // mirror for facing-wall use: right hand = right strings
     const y    = tip.y * this.canvasHeight;
     const prevX = this.prevX ?? x;
     this.prevX  = x;
