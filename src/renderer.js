@@ -8,6 +8,11 @@ export class Renderer {
     this.stringCount = config.STRING_COUNT;
   }
 
+  resize(w, h) {
+    this.width  = w;
+    this.height = h;
+  }
+
   draw(strings, perfNow) {
     const ctx     = this.ctx;
     const now     = Date.now();

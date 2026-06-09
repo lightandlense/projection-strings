@@ -11,32 +11,53 @@ export const CONFIG = {
   DAMPING: 0.98,
   GRAVITY: 0.3,
   TRIGGER_DEBOUNCE_MS: 300,
-  CANVAS_WIDTH: 960,
-  CANVAS_HEIGHT: 540,
   HUE_CYCLE_MS: 30000,    // full hue rotation period
   HUE_SPREAD_DEG: 30,     // hue spread across all strings
   GLOW_PULSE_DURATION: 800, // ms for pluck bloom to decay
   NEIGHBOR_BLEED: 2,      // strings on each side that receive pluck energy
 };
 
-CONFIG.SEGMENT_LENGTH = CONFIG.CANVAS_HEIGHT / CONFIG.NODES_PER_STRING;
-
 const canvas = document.getElementById('canvas');
-canvas.width = CONFIG.CANVAS_WIDTH;
-canvas.height = CONFIG.CANVAS_HEIGHT;
 
-const renderer = new Renderer(canvas, CONFIG);
-
-const strings = [];
-const spacing = CONFIG.CANVAS_WIDTH / (CONFIG.STRING_COUNT + 1);
-for (let i = 0; i < CONFIG.STRING_COUNT; i++) {
-  const x = spacing * (i + 1);
-  const xOffset = (Math.random() - 0.5) * 10;
-  strings.push(new StringInst(x, 0, CONFIG.NODES_PER_STRING, CONFIG.SEGMENT_LENGTH, xOffset));
+function resizeCanvas() {
+  CONFIG.CANVAS_WIDTH  = window.innerWidth;
+  CONFIG.CANVAS_HEIGHT = window.innerHeight;
+  CONFIG.SEGMENT_LENGTH = CONFIG.CANVAS_HEIGHT / (CONFIG.NODES_PER_STRING - 1);
+  canvas.width  = CONFIG.CANVAS_WIDTH;
+  canvas.height = CONFIG.CANVAS_HEIGHT;
+  // Rebuild strings to fill the new dimensions
+  rebuildStrings();
+  if (renderer) renderer.resize(CONFIG.CANVAS_WIDTH, CONFIG.CANVAS_HEIGHT);
+  if (tracker)  tracker.resize(CONFIG.CANVAS_WIDTH, CONFIG.CANVAS_HEIGHT);
 }
 
-const physics = new PhysicsEngine(strings, CONFIG);
+// Initial values before first resize
+CONFIG.CANVAS_WIDTH  = window.innerWidth;
+CONFIG.CANVAS_HEIGHT = window.innerHeight;
+CONFIG.SEGMENT_LENGTH = CONFIG.CANVAS_HEIGHT / (CONFIG.NODES_PER_STRING - 1);
+canvas.width  = CONFIG.CANVAS_WIDTH;
+canvas.height = CONFIG.CANVAS_HEIGHT;
+
+let renderer = new Renderer(canvas, CONFIG);
+let physics;
+
+const strings = [];
+function rebuildStrings() {
+  strings.length = 0;
+  const spacing = CONFIG.CANVAS_WIDTH / (CONFIG.STRING_COUNT + 1);
+  for (let i = 0; i < CONFIG.STRING_COUNT; i++) {
+    const x = spacing * (i + 1);
+    const xOffset = (Math.random() - 0.5) * 10;
+    strings.push(new StringInst(x, 0, CONFIG.NODES_PER_STRING, CONFIG.SEGMENT_LENGTH, xOffset));
+  }
+  physics = new PhysicsEngine(strings, CONFIG);
+}
+rebuildStrings();
+
 const audio = new AudioEngine(CONFIG.STRING_COUNT);
+
+window.addEventListener('resize', resizeCanvas);
+window.addEventListener('fullscreenchange', resizeCanvas);
 
 let currentFingers = [];
 let audioUnlocked = false;
@@ -52,9 +73,8 @@ let pendingMouseY = null;
 
 canvas.addEventListener('mousemove', (e) => {
   if (handTrackingActive) return;
-  const rect = canvas.getBoundingClientRect();
-  pendingMouseX = (e.clientX - rect.left) * (CONFIG.CANVAS_WIDTH  / rect.width);
-  pendingMouseY = (e.clientY - rect.top)  * (CONFIG.CANVAS_HEIGHT / rect.height);
+  pendingMouseX = e.clientX;
+  pendingMouseY = e.clientY;
 });
 
 canvas.addEventListener('mouseleave', () => {
@@ -68,6 +88,13 @@ document.addEventListener('click', () => {
     audio.unlock();
     audioUnlocked = true;
     overlay.classList.add('hidden');
+    tracker.init().then(() => {
+      handTrackingActive = true;
+      status.textContent = 'hand tracking active';
+    }).catch((err) => {
+      console.warn('HandTracker init failed:', err);
+      status.textContent = 'camera unavailable — mouse mode';
+    });
   }
 }, { once: true });
 
@@ -81,7 +108,7 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-const tracker = new HandTracker(CONFIG.CANVAS_WIDTH, CONFIG.CANVAS_HEIGHT, (fingers) => {
+let tracker = new HandTracker(CONFIG.CANVAS_WIDTH, CONFIG.CANVAS_HEIGHT, (fingers) => {
   currentFingers = fingers;
 });
 
@@ -133,7 +160,8 @@ setInterval(() => {
   const fps = Math.round(frameCount / ((now - lastFpsTime) / 1000));
   frameCount = 0;
   lastFpsTime = now;
-  status.textContent = `mouse mode | ${fps} fps | ${CONFIG.STRING_COUNT} strings`;
+  const mode = handTrackingActive ? 'hand tracking' : 'mouse mode';
+  status.textContent = `${mode} | ${fps} fps | ${CONFIG.STRING_COUNT} strings`;
 }, 500);
 
 requestAnimationFrame(loop);

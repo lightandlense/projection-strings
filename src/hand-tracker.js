@@ -7,6 +7,11 @@ export class HandTracker {
     this.active       = false;
   }
 
+  resize(w, h) {
+    this.canvasWidth  = w;
+    this.canvasHeight = h;
+  }
+
   async init() {
     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
 
@@ -50,7 +55,7 @@ export class HandTracker {
     }
 
     const tip  = results.multiHandLandmarks[0][8]; // index fingertip
-    const x    = (1 - tip.x) * this.canvasWidth;   // mirror X
+    const x    = tip.x * this.canvasWidth;
     const y    = tip.y * this.canvasHeight;
     const prevX = this.prevX ?? x;
     this.prevX  = x;
