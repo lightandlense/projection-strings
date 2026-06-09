@@ -5,11 +5,17 @@ export class HandTracker {
     this.onUpdate     = onUpdate;
     this.prevX        = null;
     this.active       = false;
+    this.mirror       = false; // press M to toggle at runtime
   }
 
   resize(w, h) {
     this.canvasWidth  = w;
     this.canvasHeight = h;
+  }
+
+  toggleMirror() {
+    this.mirror = !this.mirror;
+    return this.mirror;
   }
 
   async init() {
@@ -44,7 +50,7 @@ export class HandTracker {
     await hands.initialize();
     this.active = true;
     requestAnimationFrame(sendFrame);
-    console.log('HandTracker: active');
+    console.log('HandTracker: active — press M to toggle mirror');
   }
 
   _onResults(results) {
@@ -53,9 +59,10 @@ export class HandTracker {
       return;
     }
 
-    const tip   = results.multiHandLandmarks[0][8]; // index fingertip
-    const x     = tip.x * this.canvasWidth;          // camera mirrors + display mirrors = double flip = no flip
-    const y     = tip.y * this.canvasHeight;
+    const tip  = results.multiHandLandmarks[0][8];
+    const rawX = tip.x * this.canvasWidth;
+    const x    = this.mirror ? (this.canvasWidth - rawX) : rawX;
+    const y    = tip.y * this.canvasHeight;
     const prevX = this.prevX ?? x;
     this.prevX  = x;
 

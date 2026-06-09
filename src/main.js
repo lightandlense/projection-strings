@@ -106,6 +106,11 @@ document.addEventListener('keydown', (e) => {
       document.exitFullscreen();
     }
   }
+  if (e.key === 'm' || e.key === 'M') {
+    const mirrored = tracker.toggleMirror();
+    status.textContent = `mirror: ${mirrored ? 'ON' : 'OFF'} — press M to toggle`;
+    setTimeout(() => { status.textContent = ''; }, 2000);
+  }
 });
 
 let tracker = new HandTracker(CONFIG.CANVAS_WIDTH, CONFIG.CANVAS_HEIGHT, (fingers) => {
