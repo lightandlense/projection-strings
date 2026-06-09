@@ -101,7 +101,7 @@ document.addEventListener('click', () => {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'f' || e.key === 'F') {
     if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen();
+      canvas.requestFullscreen();
     } else {
       document.exitFullscreen();
     }
