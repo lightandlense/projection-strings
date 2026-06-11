@@ -1,5 +1,5 @@
 import { StringInst } from './string.js';
-import { Renderer } from './renderer.js';
+import { Renderer, THEMES } from './renderer.js';
 import { PhysicsEngine } from './physics.js';
 import { HandTracker } from './hand-tracker.js';
 import { AudioEngine } from './audio.js';
@@ -15,6 +15,7 @@ export const CONFIG = {
   HUE_SPREAD_DEG: 30,     // hue spread across all strings
   GLOW_PULSE_DURATION: 800, // ms for pluck bloom to decay
   NEIGHBOR_BLEED: 2,      // strings on each side that receive pluck energy
+  THEME: 'neon',          // 'neon' (black bg, glowing color) | 'light' (white bg, color) | 'ink' (white bg, black)
 };
 
 const canvas = document.getElementById('canvas');
@@ -109,6 +110,14 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'm' || e.key === 'M') {
     const mirrored = tracker.toggleMirror();
     status.textContent = `mirror: ${mirrored ? 'ON' : 'OFF'} — press M to toggle`;
+    setTimeout(() => { status.textContent = ''; }, 2000);
+  }
+  if (e.key === 'c' || e.key === 'C') {
+    const idx = THEMES.indexOf(CONFIG.THEME);
+    CONFIG.THEME = THEMES[(idx + 1) % THEMES.length];
+    renderer.setTheme(CONFIG.THEME);
+    const labels = { neon: 'neon (black bg)', light: 'color on white', ink: 'black on white' };
+    status.textContent = `theme: ${labels[CONFIG.THEME]} — press C to cycle`;
     setTimeout(() => { status.textContent = ''; }, 2000);
   }
 });
